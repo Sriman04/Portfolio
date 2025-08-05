@@ -141,7 +141,6 @@ nav {
     border-bottom: 2px solid #00bfff;
 }
 
-
 nav {
     display: flex;
     justify-content: space-between;
@@ -161,7 +160,6 @@ nav {
     gap: 30px; /* spacing between items */
     margin-left: 100px; /* adjust this value to control how far from the left they start */
 }
-
 
 .nav-links a {
     font-weight: 500;
@@ -204,14 +202,35 @@ nav {
 .hero {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     min-height: 100vh;
     padding-top: 80px;
+    background-image: url('../assets/ml_3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    padding: 80px 10%;
+    position: relative;
+    z-index: 1;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Reduced opacity for clearer background */
+    z-index: 0;
 }
 
 .hero-content {
-    flex: 1;
-    padding-right: 50px;
+    flex: 0 0 50%;
+    padding-right: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-content h1 {
@@ -234,17 +253,6 @@ nav {
 .cta-buttons {
     display: flex;
     gap: 20px;
-}
-
-.hero-image {
-    flex: 1;
-    text-align: center;
-}
-
-.hero-image img {
-    max-width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* Skills Section */
@@ -736,6 +744,7 @@ footer {
     .hero-content {
         padding-right: 0;
         margin-bottom: 50px;
+        flex: 1;
     }
     
     .cta-buttons {
@@ -867,91 +876,7 @@ footer {
     font-weight: 600;
 }
 
-/* Add this to your style.css */
-.hero {
-    background-image: url('../assets/ml_3.jpg'); /* Correct relative path */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: #ffffff;
-    min-height: 100vh;
-    padding: 80px 10%;
-    position: relative;
-    z-index: 1;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
-    z-index: 0;
-}
-.hero-content {
-    position: relative;
-    z-index: 1;
-}
-
-.language-icons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 10px;
-}
-
-.lang-item {
-    text-align: center;
-    width: 100px;
-}
-
-.lang-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    margin-bottom: 5px;
-}
-
-.language-icons {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-.lang-item {
-    width: 120px;
-    height: 150px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 10px;
-}
-
-.lang-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-}
-
-.lang-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    margin-top: 10px;
-}
-
-.lang-item p {
-    margin-top: 10px;
-    font-weight: bold;
-    font-size: 1rem;
-}
-
+/* Language Icons */
 .language-icons {
     display: flex;
     justify-content: center;
@@ -1004,14 +929,14 @@ footer {
 
 /* About Image Styling */
 .about-image {
-  height: 300px; /* Adjusted to match visual distance between heading and button */
-  width: auto;
-  transition: all 0.3s ease;
-  border-radius: 10px;
+    height: auto; /* Adjusted to match visual distance between heading and button */
+    width: auto;
+    transition: all 0.3s ease;
+    border-radius: 10px;
 }
 
 /* Hover Effect */
 .about-image:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-  filter: brightness(1.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    filter: brightness(1);
 }

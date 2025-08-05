@@ -94,7 +94,7 @@
                             <label for="message">Your Message</label>
                         </div>
                         
-                        <button type="submit" class="btn">Send Message</button>
+                        <button type="submit" class="btn" id="submitButton">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -120,30 +120,37 @@
         document.getElementById("contactForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             
+            const submitButton = document.getElementById("submitButton");
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+            
             const formData = {
-                name: document.getElementById("name").value,
-                email: document.getElementById("email").value,
-                subject: document.getElementById("subject").value,
-                message: document.getElementById("message").value
+                name: document.getElementById("name").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                subject: document.getElementById("subject").value.trim(),
+                message: document.getElementById("message").value.trim()
             };
             
             try {
-                const response = await fetch("http://localhost:3000/send-message", {
+                const response = await fetch("http://localhost:3000/send", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData),
                 });
                 
                 const result = await response.json();
-                if (result.success) {
-                    alert("Message sent successfully!");
-                    e.target.reset(); // Clear the form after submission
+                if (response.ok && result.message === "Message sent successfully") {
+                    alert("Your message has been sent successfully!");
+                    document.getElementById("contactForm").reset();
                 } else {
-                    alert("Failed to send message. Please try again.");
+                    throw new Error(result.message || "Failed to send message");
                 }
             } catch (error) {
-                console.error(error);
-                alert("An error occurred. Please try again.");
+                console.error("Error sending message:", error);
+                alert(`Failed to send message: ${error.message}. Please try again later.`);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = "Send Message";
             }
         });
     </script>

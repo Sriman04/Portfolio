@@ -19,6 +19,14 @@ app.use(express.static(path.join(__dirname, "../")));
 app.post("/send", (req, res) => {
     const { name, email, subject, message } = req.body;
 
+    // Validate input fields
+    if (!name || !email || !subject || !message) {
+        console.error("Validation error: All fields are required");
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    console.log("Received form data:", { name, email, subject, message });
+
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -29,23 +37,23 @@ app.post("/send", (req, res) => {
 
     const mailOptions = {
         from: process.env.EMAIL,
-        to: process.env.EMAIL,
+        to: "srimanraoch@gmail.com",
         subject: `Portfolio Contact Form - ${subject}`,
         text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+        replyTo: email, // Allows replying directly to the sender's email
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            console.error(error);
-            res.status(500).json({ message: "Failed to send message" });
-        } else {
-            console.log("Email sent: " + info.response);
-            res.status(200).json({ message: "Message sent successfully" });
+            console.error("Error sending email:", error);
+            return res.status(500).json({ message: `Failed to send message: ${error.message}` });
         }
+        console.log("Email sent:", info.response);
+        res.status(200).json({ message: "Message sent successfully" });
     });
 });
 
-// Fallback route for 404 (optional)
+// Fallback route for 404
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../index.html"));
 });
